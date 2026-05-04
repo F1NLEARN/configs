@@ -3,6 +3,16 @@
 # ============================================================
 
 spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:finlearn-redis}
+      port: ${REDIS_PORT:6379}
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 2
   cloud:
     gateway:
       # CORS 전역 설정
@@ -27,8 +37,9 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 
       # 라우트별 Resilience4j 설정
-      mvc:
-        routes:
+      server:
+        webmvc:
+          routes:
           - id: user-service
             uri: lb://user-service
             predicates:
@@ -93,7 +104,7 @@ spring:
                   name: learningService
                   fallbackUri: forward:/fallback/learning-service
 
-# JWT 공개키 / 검증 설정
+# JWT 검증 설정
 jwt:
   secret: ${JWT_SECRET}
   access-token-expiration: 1800000    # 30분
