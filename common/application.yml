@@ -35,7 +35,6 @@ resilience4j:
         recordExceptions:
           - java.io.IOException
           - java.util.concurrent.TimeoutException
-          - feign.FeignException
   retry:
     configs:
       default:
