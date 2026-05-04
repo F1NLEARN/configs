@@ -1,6 +1,7 @@
 # ============================================================
-# 모든 서비스 공통 설정 (항상 로드)
-# 로컬 환경에서는 application-local.yml 이 이 설정을 오버라이드합니다.
+# 공통 기본 설정 - 모든 서비스/환경에서 항상 로드
+# Kafka: application-kafka.yml / Topics: application-topics.yml
+# Local: application-local.yml / Test: application-test.yml
 # ============================================================
 
 # ── OpenFeign ──────────────────────────────────────────────
@@ -18,37 +19,6 @@ spring:
       httpclient:
         hc5:
           enabled: true
-
-  # ── Kafka (공통 프로듀서/컨슈머 설정 + SSL) ──────────────
-  kafka:
-    bootstrap-servers: 34.22.76.220:9092,34.22.66.172:9092,34.158.203.99:9092
-    properties:
-      security.protocol: SSL
-    ssl:
-      trust-store-location: classpath:ssl/kafka.server.truststore.jks
-      trust-store-password: ${KAFKA_SSL_PASSWORD:_aA123456}
-      trust-store-type: JKS
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      acks: all
-      retries: 3
-      properties:
-        enable.idempotence: 'true'
-        max.in.flight.requests.per.connection: 5
-        delivery.timeout.ms: 120000
-        linger.ms: 5
-        batch.size: 16384
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      enable-auto-commit: false
-      auto-offset-reset: earliest
-    listener:
-      ack-mode: MANUAL_IMMEDIATE
-      concurrency: 3
-      # Dead Letter Topic 지원
-      missing-topics-fatal: false
 
 # ── Resilience4j ──────────────────────────────────────────
 resilience4j:
@@ -128,32 +98,6 @@ springdoc:
     path: /api-docs.html
     enabled: true
 
-# ── Kafka Topic 명세 (서비스별) ───────────────────────────
-kafka:
-  topics:
-    user:
-      registered: finlearn-user-registered
-      updated: finlearn-user-updated
-      deleted: finlearn-user-deleted
-    learning:
-      started: finlearn-learning-started
-      completed: finlearn-learning-completed
-      progress-updated: finlearn-learning-progress-updated
-    quiz:
-      submitted: finlearn-quiz-submitted
-      graded: finlearn-quiz-graded
-    simulation:
-      started: finlearn-simulation-started
-      completed: finlearn-simulation-completed
-    achievement:
-      earned: finlearn-achievement-earned
-      unlocked: finlearn-achievement-unlocked
-    ranking:
-      updated: finlearn-ranking-updated
-    season:
-      started: finlearn-season-started
-      ended: finlearn-season-ended
-
 # ── 공통 에러 코드 ─────────────────────────────────────────
 error:
   configs:
@@ -194,9 +138,7 @@ error:
       status: 503
       message: "서비스를 일시적으로 사용할 수 없습니다."
 
-# ── 로깅 ─────────────────────────────────────────────────
+# ── 기본 로깅 ─────────────────────────────────────────────
 logging:
   level:
     com.finlearn: INFO
-    org.springframework.kafka: INFO
-    org.apache.kafka: WARN

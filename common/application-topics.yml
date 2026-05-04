@@ -1,0 +1,30 @@
+# ============================================================
+# Kafka 토픽 명세 (profile: topics)
+# 프로덕션 토픽명 정의
+# 로컬 개발 토픽은 application-local.yml 에서 오버라이드
+# ============================================================
+
+kafka:
+  topics:
+    user:
+      registered: finlearn-user-registered
+      updated: finlearn-user-updated
+      deleted: finlearn-user-deleted
+    learning:
+      started: finlearn-learning-started
+      completed: finlearn-learning-completed
+      progress-updated: finlearn-learning-progress-updated
+    quiz:
+      submitted: finlearn-quiz-submitted
+      graded: finlearn-quiz-graded
+    simulation:
+      started: finlearn-simulation-started
+      completed: finlearn-simulation-completed
+    achievement:
+      earned: finlearn-achievement-earned
+      unlocked: finlearn-achievement-unlocked
+    ranking:
+      updated: finlearn-ranking-updated
+    season:
+      started: finlearn-season-started
+      ended: finlearn-season-ended
