@@ -1,0 +1,17 @@
+# ============================================================
+# learning-service 기본 설정
+# ============================================================
+
+spring:
+  kafka:
+    consumer:
+      group-id: learning-service
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true

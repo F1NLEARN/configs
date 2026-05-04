@@ -1,0 +1,46 @@
+# ============================================================
+# quiz-service 기본 설정
+# ============================================================
+
+spring:
+  kafka:
+    consumer:
+      group-id: quiz-service
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+
+  # AI API 키 (환경변수에서 주입)
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        enabled: true
+        api-key: ${GEMINI_API_KEY}
+        base-url: https://generativelanguage.googleapis.com/v1beta/openai/
+        options:
+          model: gemini-2.0-flash-lite
+      embedding:
+        options:
+          model: text-embedding-3-small
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+        initialize-schema: false
+
+wiki:
+  api:
+    base-url: https://ko.wikipedia.org/w/api.php
+    contact-email: ${WIKI_CONTACT_EMAIL:}
+  web-url-prefix: https://ko.wikipedia.org/wiki/

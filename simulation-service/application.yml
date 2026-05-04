@@ -1,0 +1,24 @@
+# ============================================================
+# simulation-service 기본 설정
+# ============================================================
+
+spring:
+  kafka:
+    consumer:
+      group-id: simulation-service
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+
+# Outbox 스케줄링 설정
+spring.task:
+  scheduling:
+    pool:
+      size: 5
+    thread-name-prefix: simulation-scheduling-

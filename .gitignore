@@ -1,0 +1,15 @@
+# SSL 인증서 파일 (각 서비스의 resources/ssl 폴더에 직접 배포)
+*.jks
+*.p12
+*.pem
+*.crt
+*.key
+
+# 로컬 오버라이드
+*.local.yml
+application-secrets.yml
+
+# 편집기 임시 파일
+.idea/
+*.iml
+.DS_Store

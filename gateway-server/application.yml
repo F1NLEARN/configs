@@ -1,0 +1,100 @@
+# ============================================================
+# gateway-server 전용 설정
+# ============================================================
+
+spring:
+  cloud:
+    gateway:
+      # CORS 전역 설정
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+            maxAge: 3600
+      # 기본 필터
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+      # 라우트별 Resilience4j 설정
+      mvc:
+        routes:
+          - id: user-service
+            uri: lb://user-service
+            predicates:
+              - Path=/api/v1/users/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: userService
+                  fallbackUri: forward:/fallback/user-service
+          - id: quiz-service
+            uri: lb://quiz-service
+            predicates:
+              - Path=/api/quiz/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: quizService
+                  fallbackUri: forward:/fallback/quiz-service
+          - id: simulation-service
+            uri: lb://simulation-service
+            predicates:
+              - Path=/api/simulation/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: simulationService
+                  fallbackUri: forward:/fallback/simulation-service
+          - id: season-service
+            uri: lb://season-service
+            predicates:
+              - Path=/api/seasons/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: seasonService
+                  fallbackUri: forward:/fallback/season-service
+          - id: achievement-service
+            uri: lb://achievement-service
+            predicates:
+              - Path=/api/achievements/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: achievementService
+                  fallbackUri: forward:/fallback/achievement-service
+          - id: ranking-service
+            uri: lb://ranking-service
+            predicates:
+              - Path=/api/ranking/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: rankingService
+                  fallbackUri: forward:/fallback/ranking-service
+          - id: learning-service
+            uri: lb://learning-service
+            predicates:
+              - Path=/api/learning/**
+            filters:
+              - name: CircuitBreaker
+                args:
+                  name: learningService
+                  fallbackUri: forward:/fallback/learning-service
+
+# JWT 공개키 / 검증 설정
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-expiration: 1800000    # 30분
+  refresh-token-expiration: 604800000 # 7일

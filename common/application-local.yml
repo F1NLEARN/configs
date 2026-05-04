@@ -1,0 +1,53 @@
+# ============================================================
+# 로컬 개발 환경 공통 오버라이드 (profile: local)
+# Kafka SSL 비활성화, localhost 연결, 상세 로깅 활성화
+# ============================================================
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      security.protocol: PLAINTEXT
+    listener:
+      concurrency: 1
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+kafka:
+  topics:
+    user:
+      registered: local-user-registered
+      updated: local-user-updated
+      deleted: local-user-deleted
+    learning:
+      started: local-learning-started
+      completed: local-learning-completed
+      progress-updated: local-learning-progress-updated
+    quiz:
+      submitted: local-quiz-submitted
+      graded: local-quiz-graded
+    simulation:
+      started: local-simulation-started
+      completed: local-simulation-completed
+    achievement:
+      earned: local-achievement-earned
+      unlocked: local-achievement-unlocked
+    ranking:
+      updated: local-ranking-updated
+    season:
+      started: local-season-started
+      ended: local-season-ended
+
+logging:
+  level:
+    com.finlearn: DEBUG
+    org.springframework.kafka: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
