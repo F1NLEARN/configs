@@ -22,3 +22,13 @@ spring.task:
     pool:
       size: 5
     thread-name-prefix: simulation-scheduling-
+
+external:
+  kis:
+    enabled: ${KIS_ENABLED:false}
+    base-url: ${KIS_BASE_URL:https://openapi.koreainvestment.com:9443}
+    token-path: ${KIS_TOKEN_PATH:/oauth2/tokenP}
+    price-path: ${KIS_PRICE_PATH:/uapi/domestic-stock/v1/quotations/inquire-price}
+    app-key: ${KIS_APP_KEY:}
+    app-secret: ${KIS_APP_SECRET:}
+    market-div-code: ${KIS_MARKET_DIV_CODE:J}
