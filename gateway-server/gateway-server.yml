@@ -52,7 +52,7 @@ spring:
           - id: quiz-service
             uri: lb://quiz-service
             predicates:
-              - Path=/api/quiz/**
+              - Path=/api/v1/quiz/**
             filters:
               - name: CircuitBreaker
                 args:
@@ -61,7 +61,7 @@ spring:
           - id: simulation-service
             uri: lb://simulation-service
             predicates:
-              - Path=/api/simulation/**
+              - Path=/api/v1/investments/**,/api/v1/holdings/**,/api/v1/trade-histories/**,/api/v1/analyses/**
             filters:
               - name: CircuitBreaker
                 args:
@@ -70,7 +70,7 @@ spring:
           - id: season-service
             uri: lb://season-service
             predicates:
-              - Path=/api/seasons/**
+              - Path=/api/v1/seasons/**
             filters:
               - name: CircuitBreaker
                 args:
@@ -79,7 +79,7 @@ spring:
           - id: achievement-service
             uri: lb://achievement-service
             predicates:
-              - Path=/api/achievements/**
+              - Path=/api/v1/achievements/**
             filters:
               - name: CircuitBreaker
                 args:
@@ -88,7 +88,7 @@ spring:
           - id: ranking-service
             uri: lb://ranking-service
             predicates:
-              - Path=/api/ranking/**
+              - Path=/api/v1/rankings/**
             filters:
               - name: CircuitBreaker
                 args:
@@ -97,7 +97,7 @@ spring:
           - id: learning-service
             uri: lb://learning-service
             predicates:
-              - Path=/api/learning/**
+              - Path=/api/v1/learning/**
             filters:
               - name: CircuitBreaker
                 args:

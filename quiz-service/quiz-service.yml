@@ -14,19 +14,22 @@ spring:
         jdbc:
           batch_size: 50
 
-  # AI API 키 (환경변수에서 주입)
+  # AI 모델 활성화 지정
   ai:
-    openai:
-      api-key: ${OPENAI_API_KEY}
-      chat:
-        enabled: true
+    google:
+      genai:
         api-key: ${GEMINI_API_KEY}
-        base-url: https://generativelanguage.googleapis.com/v1beta/openai/
-        options:
-          model: gemini-2.0-flash-lite
-      embedding:
-        options:
-          model: text-embedding-3-small
+        project-id: ${GEMINI_PROJECT_ID}
+        chat:
+          options:
+            model: gemini-3.1-flash-lite
+        embedding:
+          api-key: ${GEMINI_API_KEY}
+          project-id: ${GEMINI_PROJECT_ID}
+          text:
+            options:
+              model: gemini-embedding-2
+              dimensions: 1536
     chat:
       memory:
         repository:
@@ -37,7 +40,7 @@ spring:
         index-type: HNSW
         distance-type: COSINE_DISTANCE
         dimensions: 1536
-        initialize-schema: false
+        initialize-schema: true
 
 wiki:
   api:
