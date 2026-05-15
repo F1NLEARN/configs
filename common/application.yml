@@ -60,7 +60,7 @@ resilience4j:
   timelimiter:
     configs:
       default:
-        timeoutDuration: 3s
+        timeoutDuration: 30s
         cancelRunningFuture: true
   ratelimiter:
     configs:
@@ -141,3 +141,5 @@ error:
 logging:
   level:
     com.finlearn: INFO
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
