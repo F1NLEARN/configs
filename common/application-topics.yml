@@ -17,6 +17,7 @@ kafka:
     quiz:
       submitted: finlearn-quiz-submitted
       graded: finlearn-quiz-graded
+      etl-triggered: finlearn-quiz-etl-triggered
     simulation:
       started: finlearn-simulation-started
       completed: finlearn-simulation-completed
